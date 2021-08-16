@@ -1,0 +1,90 @@
+{
+  "kind": "network",
+  "cidr": "10.238.0.0/16",
+  "default_gateway": "10.238.2.3",
+  "mesh": false,
+  "private": false,
+  "peers": [
+    {
+      "kind": "network",
+      "cidr": "10.238.1.0/24",
+      "default_gateway": "10.238.1.1",
+      "mesh": false,
+      "private": false,
+      "peers": [
+        {
+          "kind": "host",
+          "name": "ruby",
+          "ip": "10.238.1.1",
+          "address": "ruby.tintinho.net:51820"
+        },
+        {
+          "kind": "host",
+          "name": "sapphire",
+          "ip": "10.238.1.2"
+        }
+      ]
+    },
+    {
+      "kind": "network",
+      "cidr": "10.238.2.0/24",
+      "default_gateway": "10.238.2.3",
+      "mesh": false,
+      "private": true,
+      "peers": [
+        {
+          "kind": "host",
+          "name": "apple",
+          "ip": "10.238.2.1",
+          "private_address": "apple.local:51820"
+        },
+        {
+          "kind": "host",
+          "name": "banana",
+          "ip": "10.238.2.2",
+          "private_address": "banana.local:51820"
+        },
+        {
+          "kind": "host",
+          "name": "cherry",
+          "ip": "10.238.2.3",
+          "private_address": "cherry.local:51820",
+          "address": "home.tintinho.net:51820"
+        },
+        {
+          "kind": "host",
+          "name": "dewberry",
+          "ip": "10.238.2.4",
+          "private_address": "dewberry.local:51820"
+        },
+        {
+          "kind": "host",
+          "name": "elderberry",
+          "ip": "10.238.2.5",
+          "private_address": "elderberry.local:51820"
+        },
+        {
+          "kind": "host",
+          "name": "fig",
+          "ip": "10.238.2.6",
+          "private_address": "fig.local:51820"
+        }
+      ]
+    },
+    {
+      "kind": "host",
+      "name": "nuc",
+      "ip": "10.238.0.1"
+    },
+    {
+      "kind": "host",
+      "name": "mbp",
+      "ip": "10.238.0.2"
+    },
+    {
+      "kind": "host",
+      "name": "iphone",
+      "ip": "10.238.0.3"
+    }
+  ]
+}
