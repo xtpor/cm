@@ -1,0 +1,19 @@
+#!/bin/sh
+set -eu
+
+if [ $(id -u) -ne 0 ]; then
+  >&2 echo "Please run this script as root"
+  exit 1
+fi
+
+# enable the wireguard kernel extension
+modprobe wireguard
+
+# install wireguard-tools by building it from source
+rm -rf /tmp/wireguard-tools >/dev/null 2>&1 || true
+git clone https://git.zx2c4.com/wireguard-tools /tmp/wireguard-tools
+make -C /tmp/wireguard-tools/src -j$(nproc)
+make -C /tmp/wireguard-tools/src install
+
+# enable ip packet forwarding
+perl -pi -e 's/#{1,}?net.ipv4.ip_forward ?= ?(0|1)/net.ipv4.ip_forward = 1/g' /etc/sysctl.conf

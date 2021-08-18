@@ -21,7 +21,8 @@
         {
           "kind": "host",
           "name": "sapphire",
-          "ip": "10.238.1.2"
+          "ip": "10.238.1.2",
+          "address": "sapphire.tintinho.net:51820"
         }
       ]
     },
@@ -29,7 +30,7 @@
       "kind": "network",
       "cidr": "10.238.2.0/24",
       "default_gateway": "10.238.2.3",
-      "mesh": false,
+      "mesh": true,
       "private": true,
       "peers": [
         {
@@ -49,7 +50,7 @@
           "name": "cherry",
           "ip": "10.238.2.3",
           "private_address": "cherry.local:51820",
-          "address": "home.tintinho.net:51820"
+          "address": "vpn.tintinho.net:51820"
         },
         {
           "kind": "host",

@@ -80,15 +80,17 @@ def generate_config(spec, output_directory):
             print("generated wireguard config for %s" % host["name"])
 
 def generate_hosts(spec, output_directory):
-    lines = []
     for host in get_hosts(spec):
-        lines.append("%s\t%s" % (host["ip"], host["name"]))
+        lines = []
+        for other_host in get_hosts(spec):
+            if other_host != host:
+                lines.append("%s\t%s\t# managed by wireguard" % (other_host["ip"], other_host["name"]))
 
-    text = "".join([line + "\n" for line in lines])
-    filename = os.path.join(output_directory, "hosts")
-    with open(filename, "w") as f:
-        f.write(text)
-        print("generated hosts file")
+        text = "".join([line + "\n" for line in lines])
+        filename = os.path.join(output_directory, "%s.hosts" % host["name"])
+        with open(filename, "w") as f:
+            f.write(text)
+            print("generated hosts file for %s" % host["name"])
 
 def get_hosts(entity):
     if entity["kind"] == "host":
