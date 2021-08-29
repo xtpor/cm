@@ -1,0 +1,42 @@
+---
+- name: Install a cronjob to auto refresh ecr token
+  hosts: all
+  remote_user: admin
+  become: yes
+
+  tasks:
+  - name: make sure the envsubt command is available
+    ansible.builtin.apt:
+      name: gettext-base
+      state: present
+
+  - name: Creates the ~/.aws directory
+    ansible.builtin.file:
+      path: /root/.aws
+      state: directory
+
+  - name: Copy the k3s registries template yaml
+    ansible.builtin.copy:
+      src: res/k3s-registries-template.yaml
+      dest: /usr/local/share/k3s-registries-template.yaml
+
+  - name: Create the ecr login script
+    ansible.builtin.template:
+      src: res/login-ecr-for-k3s.sh.j2
+      dest: /usr/local/bin/login-ecr-for-k3s.sh
+
+  - name: Set the ecr login script as executable
+    ansible.builtin.file:
+      dest: /usr/local/bin/login-ecr-for-k3s.sh
+      mode: a+x
+
+  - name: Set the ecr login script as executable
+    ansible.builtin.file:
+      dest: /usr/local/bin/login-ecr-for-k3s.sh
+      mode: a+x
+
+  - name: Add cronjob
+    ansible.builtin.cron:
+      name: "refresh ecr token"
+      hour: "*/6"
+      job: "/usr/local/bin/login-ecr-for-k3s.sh"

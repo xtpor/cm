@@ -120,6 +120,9 @@ wrapping_up() {
   ssh -oStrictHostKeyChecking=no "$SSH_HOST" 'sudo bash -s' <<- EOF
     set -e
 
+    # add the cmdline config for k3s
+    echo "$$(cat /boot/cmdline.txt) cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1" > /boot/cmdline.txt
+
     # set the new hostname
     hostname "$NEW_HOSTNAME"
     echo "$NEW_HOSTNAME" > /etc/hostname

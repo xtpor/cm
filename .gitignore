@@ -30,3 +30,6 @@ Icon
 .apdisk
 
 # End of https://www.toptal.com/developers/gitignore/api/macos
+
+
+/scratch.sh
