@@ -1,0 +1,76 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: ecr-proxy
+  labels:
+    app.kubernetes.io/name: ecr-proxy
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ecr-proxy
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ecr-proxy
+    spec:
+      containers:
+        - name: login
+          image: tintinho/ecr-proxy-ecr-login:1-armhf
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  key: AWS_ACCESS_KEY_ID
+                  name: aws-credential
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: AWS_SECRET_ACCESS_KEY
+                  name: aws-credential
+            - name: AWS_REGION
+              valueFrom:
+                configMapKeyRef:
+                  key: AWS_REGION
+                  name: ecr-proxy-config
+            - name: OUTPUT_FILE
+              value: "/data/password.txt"
+          volumeMounts:
+            - name: password-volume
+              mountPath: /data
+        - name: caddy-configurator
+          image: tintinho/ecr-proxy-caddy-configurator:1-armhf
+          env:
+            - name: AWS_ACCOUNT_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: AWS_ACCOUNT_ID
+                  name: ecr-proxy-config
+            - name: AWS_REGION
+              valueFrom:
+                configMapKeyRef:
+                  key: AWS_REGION
+                  name: ecr-proxy-config
+            - name: CADDY_ADMIN_ENDPOINT
+              value: "http://localhost:2019"
+            - name: REGISTRY_URL
+              value: "https://$(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com"
+            - name: REGISTRY_USERNAME
+              value: "AWS"
+            - name: REGISTRY_PASSWORD_FILE
+              value: "/data/password.txt"
+            - name: UPDATE_INTERVAL
+              value: "1m"
+          volumeMounts:
+            - name: password-volume
+              mountPath: /data
+        - name: caddy
+          image: caddy:2.4.3
+          ports:
+            - name: http
+              hostIP: 127.0.0.1
+              hostPort: 5000
+              containerPort: 80
+      volumes:
+        - name: password-volume
+          emptyDir: {}
