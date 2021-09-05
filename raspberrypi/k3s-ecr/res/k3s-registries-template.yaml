@@ -1,5 +1,0 @@
-configs:
-  "${ECR_REGISTRY}":
-    auth:
-      username: AWS
-      password: ${ECR_PASSWORD}

@@ -1,6 +1,10 @@
+
+[k3s_agent]
 apple
 banana
-cherry
 dewberry
 elderberry
 fig
+
+[k3s_server]
+cherry

@@ -1,0 +1,38 @@
+---
+- name: Install a config for local ecr proxy
+  hosts: all
+  remote_user: admin
+  become: yes
+
+  tasks:
+  - name: Ensure directory exist
+    ansible.builtin.file:
+      path: /etc/rancher/k3s
+      state: directory
+
+  - name: Upload k3s registries.yaml
+    ansible.builtin.template:
+      src: res/registries.yaml.j2
+      dest: /etc/rancher/k3s/registries.yaml
+
+- name: Restart k3s on server nodes
+  hosts: k3s_server
+  remote_user: admin
+  become: yes
+
+  tasks:
+  - name: Restart service
+    ansible.builtin.service:
+      name: k3s
+      state: restarted
+
+- name: Restart k3s on agent nodes
+  hosts: k3s_agent
+  remote_user: admin
+  become: yes
+
+  tasks:
+  - name: Restart service
+    ansible.builtin.service:
+      name: k3s-agent
+      state: restarted
