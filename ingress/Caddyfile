@@ -1,0 +1,7 @@
+
+lab.tintinho.net, ldap.lab.tintinho.net, wiki.lab.tintinho.net {
+  reverse_proxy 10.238.2.3 {
+    header_up Host {upstream_hostport}
+    header_up X-Forwarded-Host {host}
+  }
+}
