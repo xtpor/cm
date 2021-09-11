@@ -1,7 +1,13 @@
 
-lab.tintinho.net, ldap.lab.tintinho.net, wiki.lab.tintinho.net {
-  reverse_proxy 10.238.2.3 {
-    header_up Host {upstream_hostport}
-    header_up X-Forwarded-Host {host}
+lab.tintinho.net,
+ldap.lab.tintinho.net,
+git.lab.tintinho.net,
+ci.lab.tintinho.net,
+ebooks.lab.tintinho.net,
+kanban.lab.tintinho.net,
+postgres.lab.tintinho.net,
+wiki.lab.tintinho.net {
+  reverse_proxy 10.238.2.1 10.238.2.2 10.238.2.3 10.238.2.4 10.238.2.5 10.238.2.6 {
+    header_down X-Served-By {upstream_hostport}
   }
 }
