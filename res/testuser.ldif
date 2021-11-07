@@ -1,0 +1,8 @@
+
+dn: uid=baz,dc=lab,dc=tintinho,dc=net
+objectclass: inetOrgPerson
+uid: baz
+cn: baz
+sn: baz
+mail: baz@lab.tintinho.net
+userpassword: {SSHA}GpTsE65tF8y6RY1dA7dEcuKrgT/owZz+

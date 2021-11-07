@@ -1,0 +1,19 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pin-tiddlywiki-data
+spec:
+  template:
+    spec:
+      containers:
+      - name: hello
+        image: hello-world
+        imagePullPolicy: Always
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: tiddlywiki-data
+      nodeSelector:
+        kubernetes.io/hostname: elderberry
+      restartPolicy: Never

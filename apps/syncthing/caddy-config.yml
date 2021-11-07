@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: syncthing-caddy-config
+  labels:
+    app.kubernetes.io/name: syncthing
+data:
+  Caddyfile: |
+    :80
+    file_server {
+      root /data/library
+      hide .stfolder
+      browse
+    }

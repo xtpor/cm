@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tiddlywiki-nginx-config
+  labels:
+    app.kubernetes.io/name: tiddlywiki
+data:
+  default.conf: |
+    server {
+      listen 0.0.0.0:80;
+
+      location = /auth-proxy {
+        internal;
+
+        proxy_pass http://127.0.0.1:8888;
+
+        # URL and port for connecting to the LDAP server
+        proxy_set_header X-Ldap-URL "ldap://openldap:389";
+
+        # Base DN
+        proxy_set_header X-Ldap-BaseDN "dc=lab,dc=tintinho,dc=net";
+
+        # Bind DN
+        proxy_set_header X-Ldap-BindDN "cn=admin,dc=lab,dc=tintinho,dc=net";
+
+        # Bind Password
+        proxy_set_header X-Ldap-BindPass "password1234";
+
+        # Search
+        proxy_set_header X-Ldap-Template "(uid=%(username)s)";
+      }
+
+      location / {
+        auth_request /auth-proxy;
+
+        proxy_pass http://127.0.0.1:8080;
+        proxy_set_header x-authenticated-user $remote_user;
+      }
+    }
