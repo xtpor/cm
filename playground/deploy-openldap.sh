@@ -6,7 +6,7 @@ root="$( cd "$(dirname "$0")"; cd ..; pwd -P )"
 # provision a pvc
 kubecfg update -A pvcName=openldap-data -A nodeName=fig jobs/provision-local-path-pvc.jsonnet
 
-kubectl wait --for=condition=complete --timeout=30s job/pin-pvc-openldap-data
+kubectl wait --for=condition=complete --timeout=120s job/pin-pvc-openldap-data
 
 
 
@@ -27,7 +27,7 @@ kubecfg update \
   --tla-code config="$openldap_config" \
   "$root/apps/openldap/initialize-volume.jsonnet"
 
-kubectl wait --for=condition=complete --timeout=30s job/initialize-openldap-data
+kubectl wait --for=condition=complete --timeout=120s job/initialize-openldap-data
 
 # create the Deployment and the Service resource
 kubecfg update \
