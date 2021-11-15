@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: inspect-volume
+spec:
+  containers:
+  - name: main
+    image: debian:stable-slim
+    command: ["sleep", "3600"]
+    volumeMounts:
+    - name: data
+      mountPath: /vol
+  volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: openldap-data

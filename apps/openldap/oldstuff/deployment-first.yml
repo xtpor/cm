@@ -22,3 +22,16 @@ spec:
         envFrom:
           - configMapRef:
               name: openldap-config
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/ldap
+          subPath: database
+        - name: data
+          mountPath: /etc/ldap/slapd.d
+          subPath: config
+        - name: data
+          mountPath: /vol
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: openldap-data

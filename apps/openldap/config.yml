@@ -1,9 +1,0 @@
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: openldap-config
-data:
-  LDAP_ORGANISATION: "Tintin Ho's Lab"
-  LDAP_DOMAIN: "lab.tintinho.net"
-  LDAP_ADMIN_PASSWORD: "password1234"
