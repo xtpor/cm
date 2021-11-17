@@ -4,7 +4,7 @@ IFS=$'\t\n'
 root="$( cd "$(dirname "$0")"; cd ..; pwd -P )"
 
 # provision a pvc
-kubecfg update -A pvcName=openldap-data -A nodeName=fig jobs/provision-local-path-pvc.jsonnet
+kubecfg update -A pvcName=openldap-data -A nodeName=fig "$root/jobs/provision-local-path-pvc.jsonnet"
 
 kubectl wait --for=condition=complete --timeout=120s job/pin-pvc-openldap-data
 
@@ -15,9 +15,9 @@ openldap_config=$(cat <<-EOF
 {
   organization: "Tintin Ho's Lab",
   domain: "lab.tintinho.net",
-  adminUserPassword: "adminpassword",
-  configUserPassword: "configpassword",
-  readonlyUserPassword: "readonlypassword"
+  adminUserPassword: "$OPENLDAP_ADMIN_USER_PASSWORD",
+  configUserPassword: "$OPENLDAP_CONFIG_USER_PASSWORD",
+  readonlyUserPassword: "$OPENLDAP_READONLY_USER_PASSWORD"
 }
 EOF
 )

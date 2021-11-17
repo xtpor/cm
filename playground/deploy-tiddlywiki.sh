@@ -5,7 +5,7 @@ root="$( cd "$(dirname "$0")"; cd ..; pwd -P )"
 
 
 # provision a pvc
-kubecfg update -A pvcName=tiddlywiki-data -A nodeName=fig jobs/provision-local-path-pvc.jsonnet
+kubecfg update -A pvcName=tiddlywiki-data -A nodeName=fig "$root/jobs/provision-local-path-pvc.jsonnet"
 kubectl wait --for=condition=complete --timeout=120s job/pin-pvc-tiddlywiki-data
 
 # initialize the volume
@@ -22,7 +22,7 @@ tiddlywiki_config=$(cat <<-EOF
   ldapPort: "389",
   ldapBaseDN: "dc=lab,dc=tintinho,dc=net",
   ldapBindDN: "cn=readonly,dc=lab,dc=tintinho,dc=net",
-  ldapBindPassword: "readonlypassword",
+  ldapBindPassword: "$OPENLDAP_READONLY_USER_PASSWORD",
   ldapSearchFilter: "(uid=%(username)s)",
 }
 EOF

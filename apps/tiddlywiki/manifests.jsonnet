@@ -103,6 +103,9 @@ function(name, pvcName, config={}) (
                   "readers=(anon)",
                   "writers=(authenticated)",
                 ],
+                env: [
+                  { name: "__POD_RESTART_TRIGGER", value: std.md5(nginxConfig) },
+                ],
                 ports: [
                   { name: "http", containerPort: 8080 },
                 ],
