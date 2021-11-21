@@ -1,0 +1,8 @@
+route:
+  group_by: ["..."]
+  receiver: testreceiver
+
+receivers:
+- name: "testreceiver"
+  webhook_configs:
+    - url: "http://host.docker.internal:4000/receive-alert"

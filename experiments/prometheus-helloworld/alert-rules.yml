@@ -1,0 +1,9 @@
+groups:
+- name: my-custom-rule
+  rules:
+  - alert: MyCustomAlert
+    expr: my_custom_metrics == 0
+    for: 1m
+    annotations:
+      summary: "my custom alert"
+      description: "description of my custom alert"
