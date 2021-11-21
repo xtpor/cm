@@ -6,6 +6,6 @@ IFS=$'\t\n'
 
 container_name="grafana"
 
-docker create --name "$container_name" --network private --rm -p 3000:3000 grafana/grafana:8.2.5
+docker create --name "$container_name" --network private -p 3000:3000 grafana/grafana:8.2.5
 
 docker start "$container_name"

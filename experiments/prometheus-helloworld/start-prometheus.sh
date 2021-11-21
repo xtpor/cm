@@ -6,7 +6,7 @@ root="$( cd "$(dirname "$0")"; pwd -P )"
 
 container_name="prometheus"
 
-docker create --name "$container_name" --network private --rm -p 9090:9090 prom/prometheus:v2.31.1
+docker create --name "$container_name" --network private -p 9090:9090 prom/prometheus:v2.31.1
 
 docker cp "$root/prometheus.yml" "$container_name:/etc/prometheus/prometheus.yml"
 

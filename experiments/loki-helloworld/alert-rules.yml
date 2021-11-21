@@ -1,0 +1,9 @@
+groups:
+- name: my-custom-rule
+  rules:
+  - alert: MyCustomAlert2
+    expr: 'sum by (env) (count_over_time({env="dev"} | json | level = "alert" [3m]))'
+    for: 1m
+    annotations:
+      summary: "my custom alert 2"
+      description: "description of my custom alert 2"
