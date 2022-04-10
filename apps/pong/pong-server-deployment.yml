@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pong-server
+  labels:
+    app.kubernetes.io/name: pong-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pong-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pong-server
+    spec:
+      containers:
+      - name: web
+        image: docker.io/tintinho/pong-server:28de731
+        ports:
+        - containerPort: 5000

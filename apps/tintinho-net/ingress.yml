@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tintinho.net
+spec:
+  rules:
+  - host: "tintinho.net"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tintinho-net
+            port:
+              number: 80
+

@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pyrite-client
+  labels:
+    app.kubernetes.io/name: pyrite-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pyrite-client
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pyrite-client
+    spec:
+      containers:
+      - name: main
+        image: docker.io/tintinho/pyrite-client:774d5e1
+        ports:
+        - containerPort: 80
+        env:
+        - name: PYRITE_SERVER_URL
+          value: wss://pyrite.lab.tintinho.net/game-server

@@ -1,0 +1,23 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tintinho-net
+  labels:
+    app.kubernetes.io/name: tintinho-net
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tintinho-net
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: tintinho-net
+    spec:
+      containers:
+      - name: web
+        image: 444718235796.dkr.ecr.ap-southeast-1.amazonaws.com/tintinho-net:2a778de
+        ports:
+        - containerPort: 80
+

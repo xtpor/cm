@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fyp-archive.lab.tintinho.net
+spec:
+  rules:
+  - host: "fyp-archive.lab.tintinho.net"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: fyp-3warriors-tk
+            port:
+              number: 80

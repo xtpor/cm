@@ -1,0 +1,36 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: robocook.lab.tintinho.net-0
+spec:
+  rules:
+  - host: "robocook.lab.tintinho.net"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: robocook-client
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: robocook.lab.tintinho.net-1
+  annotations:
+    traefik.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: "robocook.lab.tintinho.net"
+    http:
+      paths:
+      - path: /game-server
+        pathType: Exact
+        backend:
+          service:
+            name: robocook-server
+            port:
+              number: 80

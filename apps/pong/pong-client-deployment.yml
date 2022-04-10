@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pong-client
+  labels:
+    app.kubernetes.io/name: pong-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pong-client
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pong-client
+    spec:
+      containers:
+      - name: main
+        image: docker.io/tintinho/pong-client:28de731
+        ports:
+        - containerPort: 5000
+        env:
+        - name: PONG_SERVER_URL
+          value: wss://pong.lab.tintinho.net/game-server
