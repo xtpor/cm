@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Usage: generate.py <network.json> <output-dir>
 import subprocess
 import os
 import pathlib

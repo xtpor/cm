@@ -86,6 +86,11 @@
       "kind": "host",
       "name": "iphone",
       "ip": "10.238.0.3"
+    },
+    {
+      "kind": "host",
+      "name": "herbert-raspi",
+      "ip": "10.238.0.4"
     }
   ]
 }
